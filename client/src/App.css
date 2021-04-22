@@ -1,0 +1,54 @@
+/*@import url('https://fonts.googleapis.com/css?family=Roboto');*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: #303030; /*Set palette bg default globally to fix errors */
+}
+
+.header {
+  color: #fff;
+}
+
+.headerIcon {
+  padding-left: 1%;
+  transform: scale(1.5);
+}
+
+.headerBox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.App {
+  text-align: center;
+}
+
+.dropdownItem,
+.stockIcon {
+  text-decoration: none;
+  color: inherit;
+}
+
+.introPage {
+  padding-bottom: 20%;
+  margin: 5% 15% 10% 15%;
+}
+
+.icons {
+  transform: scale(1.8);
+  width: 20vw;
+  height: 20vh;
+}
+
+.tableOptionsButtons {
+  color: #fff;
+}
+
+.tablePg {
+  max-width: 80%;
+  margin: auto;
+}
