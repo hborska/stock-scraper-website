@@ -7,6 +7,7 @@ import {
   MenuList,
   MenuItem,
   ClickAwayListener,
+  Select,
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import SortIcon from '@material-ui/icons/Sort';
@@ -23,7 +24,7 @@ const SortByDropdown = () => {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
-  const menuClosed = (event) => {
+  const handleMenuClick = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -32,6 +33,11 @@ const SortByDropdown = () => {
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
+  };
+
+  const testMethod = (e) => {
+    console.log(e);
+    console.log('Clicked');
   };
 
   return (
@@ -62,11 +68,11 @@ const SortByDropdown = () => {
             }}
           >
             <Paper background={theme.palette.action.active}>
-              <ClickAwayListener onClickAway={menuClosed}>
+              <ClickAwayListener onClickAway={handleMenuClick}>
                 <MenuList autoFocusItem={open} id='menu-list-grow'>
-                  <MenuItem onClick={menuClosed}>Number of Posts</MenuItem>
-                  <MenuItem onClick={menuClosed}>Comments</MenuItem>
-                  <MenuItem onClick={menuClosed}>Upvotes</MenuItem>
+                  <MenuItem onClick={handleMenuClick}>Number of Posts</MenuItem>
+                  <MenuItem onClick={handleMenuClick}>Comments</MenuItem>
+                  <MenuItem onClick={handleMenuClick}>Upvotes</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>

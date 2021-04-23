@@ -1,11 +1,8 @@
 import React from 'react';
-import { Typography, Link, IconButton } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
+import { Typography, IconButton } from '@material-ui/core';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
 const About = () => {
-  const theme = useTheme();
-
   return (
     <div className='about'>
       <Typography variant='h4' style={{ margin: '5% 5% 2% 5%' }}>

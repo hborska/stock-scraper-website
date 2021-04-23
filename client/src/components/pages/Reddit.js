@@ -1,6 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+import RedditSortDropdown from '../layout/RedditSortDropdown';
+import RedditTimeFrame from '../layout/RedditTimeFrame';
+import axios from 'axios';
 import '../../App.css';
-import SortByDropdown from '../layout/SortByDropdown';
+
 import { useTheme, withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import {
@@ -13,7 +16,6 @@ import {
   Paper,
 } from '@material-ui/core';
 import RedditIcon from '@material-ui/icons/Reddit';
-import TimeFrameDropdown from '../layout/TimeFrameDropdown';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -37,23 +39,6 @@ function createData(ticker, numPosts, numUpvotes, numComments) {
   return { ticker, numPosts, numUpvotes, numComments };
 }
 
-//Getting the data
-const dummyData = [
-  createData('AAPL', 30, 3000, 2500),
-  createData('GME', 450, 2000, 18),
-  createData('HENF', 4500, 2000, 18),
-  createData('EJF', 420, 2000, 1811),
-  createData('FJEJ', 410, 2030, 118),
-  createData('FEJ', 452, 2000, 148),
-  createData('EUSS', 90, 2000, 18),
-  createData('EJFI', 50, 2000, 18),
-  createData('EFIJ', 4500, 2000, 29),
-  createData('EIUH', 410, 2000, 18),
-];
-
-// const realData = await axios.get('http://localhost:5000/api/reddit');
-// console.log(realData);
-
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
@@ -63,19 +48,19 @@ const useStyles = makeStyles({
 const Reddit = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const anchorRef = useRef(null);
-  const [open, setOpen] = useState(false);
 
-  const menuClosed = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
+  //Setting default state for stocks, going to use to choose which list to render
+  const [stocks, setStocks] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const req = await axios.get('/api/reddit');
+      console.log(req.data);
+      setStocks(req.data);
+      return req.data;
     }
-    setOpen(false);
-  };
-
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
+    fetchData();
+  }, []);
 
   return (
     <div className='tablePg'>
@@ -104,29 +89,19 @@ const Reddit = () => {
           color={theme.palette.text.primary}
           style={{ padding: '0 1% 2% 1%' }}
         >
-          <TimeFrameDropdown />
-          <SortByDropdown />
+          <RedditTimeFrame />
+          <RedditSortDropdown />
         </Box>
       </Box>
-
-      {/* <DataGrid
-        columns={[
-          { field: 'Stock' },
-          { field: 'Number of Posts' },
-          { field: 'Total Upvotes' },
-          { field: 'Total Comments' },
-        ]}
-        rows={[]}
-      ></DataGrid> */}
 
       <TableContainer component={Paper} className='stockTable'>
         <Table className={classes.table} aria-label='customized table'>
           <TableHead>
             <TableRow>
               <StyledTableCell>Stock</StyledTableCell>
-              <StyledTableCell align='right'>Total Upvotes</StyledTableCell>
+              <StyledTableCell align='right'>Number of Posts</StyledTableCell>
               <StyledTableCell align='right'>
-                Number of Mentions&nbsp;
+                Total Upvotes&nbsp;
               </StyledTableCell>
               <StyledTableCell align='right'>
                 Total Comments&nbsp;
@@ -134,18 +109,17 @@ const Reddit = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dummyData.map((row) => (
-              <StyledTableRow key={row.ticker}>
+            {stocks.slice(0, 20).map((
+              //picking the top 20 stocks
+              row
+            ) => (
+              <StyledTableRow key={row._id}>
                 <StyledTableCell component='th' scope='row'>
-                  {row.ticker}
+                  {row._id}
                 </StyledTableCell>
-                <StyledTableCell align='right'>{row.numPosts}</StyledTableCell>
-                <StyledTableCell align='right'>
-                  {row.numUpvotes}
-                </StyledTableCell>
-                <StyledTableCell align='right'>
-                  {row.numComments}
-                </StyledTableCell>
+                <StyledTableCell align='right'>{row.count}</StyledTableCell>
+                <StyledTableCell align='right'>{row.upvotes}</StyledTableCell>
+                <StyledTableCell align='right'>{row.comments}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
