@@ -87,14 +87,13 @@ const Navbar = () => {
                       <MenuItem onClick={menuClosed}>Return Home</MenuItem>
                     </Link>
                     <Link to='/reddit' class='dropdownItem'>
-                      <MenuItem onClick={menuClosed}>
-                        Hot Reddit Stocks
-                      </MenuItem>
+                      <MenuItem onClick={menuClosed}>Reddit Stocks</MenuItem>
                     </Link>
                     <Link to='/twitter' class='dropdownItem'>
-                      <MenuItem onClick={menuClosed}>
-                        Hot Twitter Stocks
-                      </MenuItem>
+                      <MenuItem onClick={menuClosed}>Twitter Stocks</MenuItem>
+                    </Link>
+                    <Link to='/about' class='dropdownItem'>
+                      <MenuItem onClick={menuClosed}>About</MenuItem>
                     </Link>
                   </MenuList>
                 </ClickAwayListener>

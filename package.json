@@ -1,0 +1,33 @@
+{
+  "name": "stock-scraper-website-production",
+  "version": "1.0.0",
+  "description": "Website to see which stocks are hot on Reddit and Twitter",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hborska/stock-scraper-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hborska/stock-scraper-website/issues"
+  },
+  "homepage": "https://github.com/hborska/stock-scraper-website#readme",
+  "devDependencies": {
+    "concurrently": "^6.0.2",
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "config": "^3.3.6",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.5",
+    "path": "^0.12.7"
+  }
+}

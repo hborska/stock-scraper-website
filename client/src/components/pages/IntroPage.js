@@ -20,12 +20,12 @@ const IntroPage = () => {
       >
         <h1 className='header'>View Hot Stocks from Reddit and Twitter: </h1>
         <Link to='/reddit'>
-          <IconButton className='icons' color='#FF5700'>
+          <IconButton className='icons iconReddit' color='#FF5700'>
             <RedditIcon />
           </IconButton>
         </Link>
         <Link to='/twitter'>
-          <IconButton className='icons' color='#1DA1F2'>
+          <IconButton className='icons iconTwitter' color='#1DA1F2'>
             <TwitterIcon />
           </IconButton>
         </Link>

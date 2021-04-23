@@ -9,7 +9,8 @@ body {
   background-color: #303030; /*Set palette bg default globally to fix errors */
 }
 
-.header {
+.header,
+.about {
   color: #fff;
 }
 
@@ -44,6 +45,10 @@ body {
   height: 20vh;
 }
 
+.iconReddit {
+  fill: #ff5700;
+}
+
 .tableOptionsButtons {
   color: #fff;
 }
@@ -51,4 +56,8 @@ body {
 .tablePg {
   max-width: 80%;
   margin: auto;
+}
+
+.stockTable {
+  margin-bottom: 10%;
 }

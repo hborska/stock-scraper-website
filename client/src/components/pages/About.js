@@ -1,11 +1,25 @@
 import React from 'react';
+import { Typography, Link, IconButton } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 const About = () => {
+  const theme = useTheme();
+
   return (
-    <div>
-      <h1>Hot Stock Tracker -- Version 1.0.0.</h1>
-      <br />
-      <a href=''>Github Repo</a>
+    <div className='about'>
+      <Typography variant='h4' style={{ margin: '5% 5% 2% 5%' }}>
+        Hot Stock Tracker - Version 1.0.0.
+      </Typography>
+      <Typography variant='h5'>
+        Github Repo
+        <IconButton
+          href='https://github.com/hborska/stock-scraper-website'
+          target='_blank'
+        >
+          <GitHubIcon />
+        </IconButton>
+      </Typography>
     </div>
   );
 };

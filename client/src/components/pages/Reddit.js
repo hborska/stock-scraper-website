@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
+import React, { useState, useRef } from 'react';
 import '../../App.css';
+import SortByDropdown from '../layout/SortByDropdown';
 import { useTheme, withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import {
-  IconButton,
   Box,
   TableBody,
   TableCell,
@@ -12,36 +12,8 @@ import {
   TableRow,
   Paper,
 } from '@material-ui/core';
-import { flexbox } from '@material-ui/system';
-import WatchLaterIcon from '@material-ui/icons/WatchLater';
-import SortIcon from '@material-ui/icons/Sort';
 import RedditIcon from '@material-ui/icons/Reddit';
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
+import TimeFrameDropdown from '../layout/TimeFrameDropdown';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -65,6 +37,7 @@ function createData(ticker, numPosts, numUpvotes, numComments) {
   return { ticker, numPosts, numUpvotes, numComments };
 }
 
+//Getting the data
 const dummyData = [
   createData('AAPL', 30, 3000, 2500),
   createData('GME', 450, 2000, 18),
@@ -78,6 +51,9 @@ const dummyData = [
   createData('EIUH', 410, 2000, 18),
 ];
 
+// const realData = await axios.get('http://localhost:5000/api/reddit');
+// console.log(realData);
+
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
@@ -87,6 +63,19 @@ const useStyles = makeStyles({
 const Reddit = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const anchorRef = useRef(null);
+  const [open, setOpen] = useState(false);
+
+  const menuClosed = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
 
   return (
     <div className='tablePg'>
@@ -101,9 +90,13 @@ const Reddit = () => {
         <RedditIcon className='headerIcon' />
       </Box>
       <Box display='flex' className='headerBox'>
-        <h3 className='header'>
-          Currently Showing Stocks from the Past {1 + 1} Hours
-        </h3>
+        <h4 className='header'>
+          Showing Top 20 Stocks from the Past:
+          <i>
+            <strong> {1 + 1} Hours</strong>
+          </i>
+        </h4>
+
         <Box
           display='flex'
           alignItems='center'
@@ -111,18 +104,22 @@ const Reddit = () => {
           color={theme.palette.text.primary}
           style={{ padding: '0 1% 2% 1%' }}
         >
-          <p>Time Frame:</p>
-          <IconButton>
-            <WatchLaterIcon />
-          </IconButton>
-          <p>Sort By:</p>
-          <IconButton>
-            <SortIcon />
-          </IconButton>
+          <TimeFrameDropdown />
+          <SortByDropdown />
         </Box>
       </Box>
 
-      <TableContainer component={Paper}>
+      {/* <DataGrid
+        columns={[
+          { field: 'Stock' },
+          { field: 'Number of Posts' },
+          { field: 'Total Upvotes' },
+          { field: 'Total Comments' },
+        ]}
+        rows={[]}
+      ></DataGrid> */}
+
+      <TableContainer component={Paper} className='stockTable'>
         <Table className={classes.table} aria-label='customized table'>
           <TableHead>
             <TableRow>
