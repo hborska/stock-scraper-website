@@ -3,7 +3,7 @@ Rubric:
 Languages / Frameworks Used: (30 pts)
 - Learned / used Express.js backend  (10 pts)
 - Learned / used MongoDB (10 pts)
-- Learned / used React.js and Redux on front end (10 pts)
+- Learned / used React.js on front end (10 pts)
 
 Functionality: (50 pts)
 - Users can view hot stocks from Reddit (10 pts)
