@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../App.css';
-// import PropTypes from 'prop-types';
 import {
   AppBar,
   Toolbar,
@@ -25,11 +24,14 @@ const useStyles = makeStyles({
 });
 
 const Navbar = () => {
+  //Styling
   const classes = useStyles();
   const theme = useTheme();
+  //State for dropdown
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
+  //Called when menu item is clicked
   const menuClosed = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
@@ -37,6 +39,7 @@ const Navbar = () => {
     setOpen(false);
   };
 
+  //Toggles the dropdown open / closed
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };

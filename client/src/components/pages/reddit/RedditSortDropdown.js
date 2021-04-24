@@ -7,7 +7,6 @@ import {
   MenuList,
   MenuItem,
   ClickAwayListener,
-  Select,
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import SortIcon from '@material-ui/icons/Sort';
@@ -18,26 +17,30 @@ const useStyles = makeStyles({
   },
 });
 
-const SortByDropdown = () => {
+const SortByDropdown = ({ changeSort }) => {
+  //Styling
   const classes = useStyles();
   const theme = useTheme();
+  //State for dropdown
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
+  //Called when an item in the dropdown menu is clicked
   const handleMenuClick = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
+    //Retrieves the value of the item selected in the dropdown
+    const currentSort = event.target.getAttribute('value');
+    if (currentSort === 'posts') changeSort('posts');
+    if (currentSort === 'upvotes') changeSort('upvotes');
+    if (currentSort === 'comments') changeSort('comments');
     setOpen(false);
   };
 
+  //Toggles the dropdown open / closed
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
-  };
-
-  const testMethod = (e) => {
-    console.log(e);
-    console.log('Clicked');
   };
 
   return (
@@ -70,9 +73,15 @@ const SortByDropdown = () => {
             <Paper background={theme.palette.action.active}>
               <ClickAwayListener onClickAway={handleMenuClick}>
                 <MenuList autoFocusItem={open} id='menu-list-grow'>
-                  <MenuItem onClick={handleMenuClick}>Number of Posts</MenuItem>
-                  <MenuItem onClick={handleMenuClick}>Comments</MenuItem>
-                  <MenuItem onClick={handleMenuClick}>Upvotes</MenuItem>
+                  <MenuItem onClick={handleMenuClick} value='posts'>
+                    Number of Posts
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClick} value='comments'>
+                    Comments
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClick} value='upvotes'>
+                    Upvotes
+                  </MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>

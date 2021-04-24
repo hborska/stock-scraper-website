@@ -17,9 +17,7 @@ from datetime import datetime
 #Connecting pymongo to the proper collection in my database
 myClient = pymongo.MongoClient((os.environ.get("MONGODB_URI")))
 db = myClient["redditscraper"]
-wsb = db["topstocks"] #top stocks correponds to wsb
-rStocks = db["rstocks"]
-rDaytrading = db["rdaytrading"]
+topstocks = db["topstocks"] #our DB collection
 
 #API credentials for heroku deployment, stored in heroku config:
 reddit = praw.Reddit(client_id=os.environ.get("client_id"), client_secret=os.environ.get("client_secret"), user_agent=os.environ.get("user_agent"))
@@ -35,6 +33,7 @@ class Post(object):
         self.numComments = numComments
         self.time_posted = time_posted
 
+#Citation: found some of the scraper functionality on an article, cannot find it now (was for a website in C#, so a bit different)
 #Defining a class for the scraper that will go through posts in the subreddits
 class Scraper:
     def __init__(self, sub, sort='new', lim=900):
@@ -62,7 +61,7 @@ class Scraper:
 
         #Opening our CSV with all the stock tickers
         stockTickers = {}
-        with open('tickers.csv', mode='r') as csvfile:
+        with open('scrapers/reddit/tickers.csv', mode='r') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 stockTickers[row[0].split(',')[0]] = {}
@@ -79,8 +78,9 @@ class Scraper:
             for stock in stockTickers.keys():
                 if(re.search(r'\s+\$?' + stock + r'\$?\s+', post.selftext) or re.search(r'\s+\$?' + stock + r'\$?\s+',  post.title)):
                     stockTickers[stock][post.id] = Post(post.id, post.permalink, post.ups, post.downs, post.num_comments, stock, str(datetime.now()))
+    #End citation
         
-        for stock in stockTickers: #stockTickers is the WHOLE list (definitely make more efficient in future)
+        for stock in stockTickers: #stockTickers is the WHOLE list (make more efficient in future)
             if (len(stockTickers[stock]) > 0):
                 for post in stockTickers[stock]:
                     mentionedStocks.append(stockTickers[stock][post]) #our array of Post objects possibly containing stocks
@@ -99,11 +99,10 @@ class Scraper:
 if __name__ == '__main__':
     while True:
         try:
-            #Run through the hot and new sections of the specified subreddit before pausing and checking again
-            Scraper('wallstreetbets', lim=50, sort='hot').get_posts(wsb)
-            Scraper('wallstreetbets', lim=50, sort='new').get_posts(wsb)
-            #Scraper('stocks', lim=50, sort='hot').get_posts(rStocks)
-            #Scraper('daytrading', lim=50, sort='hot').get_posts(rDaytrading)
+            #Run through the hot sections of the specified subreddit before pausing and checking again
+            Scraper('wallstreetbets', lim=50, sort='hot').get_posts(topstocks)
+            Scraper('stocks', lim=50, sort='hot').get_posts(topstocks)
+            Scraper('daytrading', lim=50, sort='hot').get_posts(topstocks)
             print("Going to sleep for a sec")
             time.sleep(1)
             #mycol.delete_many({}) #only for testing DB

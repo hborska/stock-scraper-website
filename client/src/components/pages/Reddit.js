@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import RedditSortDropdown from '../layout/RedditSortDropdown';
-import RedditTimeFrame from '../layout/RedditTimeFrame';
+import RedditSortDropdown from './reddit/RedditSortDropdown';
+import RedditTimeFrame from './reddit/RedditTimeFrame';
 import axios from 'axios';
 import '../../App.css';
 
@@ -17,6 +17,8 @@ import {
 } from '@material-ui/core';
 import RedditIcon from '@material-ui/icons/Reddit';
 
+//Citation: styling for the table cells and rows retrieved from material UI official documentation
+//Theme for table cells
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -27,6 +29,7 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
+//Theme for table rows
 const StyledTableRow = withStyles((theme) => ({
   root: {
     '&:nth-of-type(odd)': {
@@ -35,32 +38,38 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function createData(ticker, numPosts, numUpvotes, numComments) {
-  return { ticker, numPosts, numUpvotes, numComments };
-}
-
+//Min width for the table
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
   },
 });
+//End citation
 
+//Main function for Reddit page
 const Reddit = () => {
+  //Styling
   const classes = useStyles();
   const theme = useTheme();
 
-  //Setting default state for stocks, going to use to choose which list to render
-  const [stocks, setStocks] = useState([]);
+  //Setting default state for stocks
+  const [stocks, setStocks] = useState([]); //list of stocks to render
+  //set state for sorting and time frame allows us to dynamically change the state
+  const [sort, setSort] = useState('upvotes');
+  const [timeFrame, setTimeFrame] = useState('5');
 
+  //Fetching the stock data from our API upon component mounting or the stocks list changing
   useEffect(() => {
     async function fetchData() {
-      const req = await axios.get('/api/reddit');
+      const req = await axios.get('/api/reddit', {
+        params: { sortMethod: sort, timeFrame: timeFrame },
+      });
       console.log(req.data);
       setStocks(req.data);
       return req.data;
     }
     fetchData();
-  }, []);
+  }, [sort, timeFrame]); //also add function for every 5 secs stocks changes
 
   return (
     <div className='tablePg'>
@@ -78,19 +87,24 @@ const Reddit = () => {
         <h4 className='header'>
           Showing Top 20 Stocks from the Past:
           <i>
-            <strong> {1 + 1} Hours</strong>
+            <strong>
+              {timeFrame === '24' || timeFrame === '4'
+                ? ` ${timeFrame} Hours`
+                : ` ${timeFrame} Days`}
+            </strong>
           </i>
         </h4>
-
         <Box
           display='flex'
           alignItems='center'
           justifyContent='center'
           color={theme.palette.text.primary}
-          style={{ padding: '0 1% 2% 1%' }}
+          style={{ padding: '0 1% 0 1%' }}
         >
-          <RedditTimeFrame />
-          <RedditSortDropdown />
+          <RedditTimeFrame
+            changeTime={(timeFrame) => setTimeFrame(timeFrame)}
+          />
+          <RedditSortDropdown changeSort={(sort) => setSort(sort)} />
         </Box>
       </Box>
 

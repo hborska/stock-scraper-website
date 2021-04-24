@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+//Creating our schema for Reddit stock posts
 const RedditStockSchema = mongoose.Schema(
   {
     ticker: {
@@ -26,9 +27,17 @@ const RedditStockSchema = mongoose.Schema(
   { collection: 'topstocks' }
 );
 
+//Modeling our schema
 const RedditStock = mongoose.model('redditStock', RedditStockSchema);
 
-const sortByPosts = RedditStock.aggregate([
+//Aggregating our schema based on time frame, grouping posts, and sorting
+//All aggregations below to be served to our reddit route then to the front end
+const sortByPosts4 = RedditStock.aggregate([
+  {
+    $match: {
+      time_posted: { $gt: new Date(Date.now() - 4 * 60 * 60 * 1000) },
+    },
+  },
   {
     $group: {
       _id: '$stock',
@@ -42,7 +51,50 @@ const sortByPosts = RedditStock.aggregate([
   },
 ]);
 
-const sortByUpvotes = RedditStock.aggregate([
+const sortByPosts24 = RedditStock.aggregate([
+  {
+    $match: {
+      time_posted: { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+    },
+  },
+  {
+    $group: {
+      _id: '$stock',
+      count: { $sum: 1 },
+      upvotes: { $sum: '$ups' },
+      comments: { $sum: '$numComments' },
+    },
+  },
+  {
+    $sort: { count: -1 },
+  },
+]);
+
+const sortByPosts5Day = RedditStock.aggregate([
+  {
+    $match: {
+      time_posted: { $gt: new Date(Date.now() - 24 * 5 * 60 * 60 * 1000) },
+    },
+  },
+  {
+    $group: {
+      _id: '$stock',
+      count: { $sum: 1 },
+      upvotes: { $sum: '$ups' },
+      comments: { $sum: '$numComments' },
+    },
+  },
+  {
+    $sort: { count: -1 },
+  },
+]);
+
+const sortByUpvotes4 = RedditStock.aggregate([
+  {
+    $match: {
+      time_posted: { $gt: new Date(Date.now() - 4 * 60 * 60 * 1000) },
+    },
+  },
   {
     $group: {
       _id: '$stock',
@@ -56,7 +108,50 @@ const sortByUpvotes = RedditStock.aggregate([
   },
 ]);
 
-const sortByComments = RedditStock.aggregate([
+const sortByUpvotes24 = RedditStock.aggregate([
+  {
+    $match: {
+      time_posted: { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+    },
+  },
+  {
+    $group: {
+      _id: '$stock',
+      count: { $sum: 1 },
+      upvotes: { $sum: '$ups' },
+      comments: { $sum: '$numComments' },
+    },
+  },
+  {
+    $sort: { upvotes: -1 },
+  },
+]);
+
+const sortByUpvotes5Day = RedditStock.aggregate([
+  {
+    $match: {
+      time_posted: { $gt: new Date(Date.now() - 24 * 5 * 60 * 60 * 1000) },
+    },
+  },
+  {
+    $group: {
+      _id: '$stock',
+      count: { $sum: 1 },
+      upvotes: { $sum: '$ups' },
+      comments: { $sum: '$numComments' },
+    },
+  },
+  {
+    $sort: { upvotes: -1 },
+  },
+]);
+
+const sortByComments4 = RedditStock.aggregate([
+  {
+    $match: {
+      time_posted: { $gt: new Date(Date.now() - 4 * 60 * 60 * 1000) },
+    },
+  },
   {
     $group: {
       _id: '$stock',
@@ -70,7 +165,55 @@ const sortByComments = RedditStock.aggregate([
   },
 ]);
 
+const sortByComments24 = RedditStock.aggregate([
+  {
+    $match: {
+      time_posted: { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+    },
+  },
+  {
+    $group: {
+      _id: '$stock',
+      count: { $sum: 1 },
+      upvotes: { $sum: '$ups' },
+      comments: { $sum: '$numComments' },
+    },
+  },
+  {
+    $sort: { comments: -1 },
+  },
+]);
+
+const sortByComments5Day = RedditStock.aggregate([
+  {
+    $match: {
+      time_posted: { $gt: new Date(Date.now() - 24 * 5 * 60 * 60 * 1000) },
+    },
+  },
+  {
+    $group: {
+      _id: '$stock',
+      count: { $sum: 1 },
+      upvotes: { $sum: '$ups' },
+      comments: { $sum: '$numComments' },
+    },
+  },
+  {
+    $sort: { comments: -1 },
+  },
+]);
+
+//Exporting our aggregated models to our reddit route on our API
 module.exports.RedditStock = RedditStock;
-module.exports.sortByPosts = sortByPosts;
-module.exports.sortByUpvotes = sortByUpvotes;
-module.exports.sortByComments = sortByComments;
+
+module.exports.sortByPosts4 = sortByPosts4;
+module.exports.sortByPosts24 = sortByPosts24;
+module.exports.sortByPosts5Day = sortByPosts5Day;
+
+module.exports.sortByUpvotes4 = sortByUpvotes4;
+module.exports.sortByUpvotes24 = sortByUpvotes24;
+module.exports.sortByUpvotes5Day = sortByUpvotes5Day;
+
+module.exports.sortByComments4 = sortByComments4;
+module.exports.sortByComments24 = sortByComments24;
+module.exports.sortByComments5Day = sortByComments5Day;

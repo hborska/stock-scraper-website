@@ -1,7 +1,7 @@
 const express = require('express');
 const dbConnection = require('./server/database/connection');
 const dotenv = require('dotenv');
-// const path = require('path'); //for production
+const path = require('path'); //for production
 
 const app = express();
 
@@ -10,11 +10,9 @@ dbConnection();
 
 //Middleware
 app.use(express.json({ extended: false }));
-dotenv.config({ path: '.env' });
 
-app.get('/', (req, res) => {
-  res.json({ msg: 'Welcome to the Stock Scraper API' });
-});
+//Configuring environment variables
+dotenv.config({ path: '.env' });
 
 //Defining routes
 app.use('/api/reddit', require('./server/routes/reddit'));

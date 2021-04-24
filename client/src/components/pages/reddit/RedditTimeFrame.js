@@ -17,19 +17,27 @@ const useStyles = makeStyles({
   },
 });
 
-const TimeFrameDropdown = () => {
+const TimeFrameDropdown = ({ changeTime }) => {
+  //Styling
   const classes = useStyles();
   const theme = useTheme();
+  //State for dropdown
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
-  const menuClosed = (event) => {
+  //Called when a item in the dropdown menu is clicked
+  const handleMenuClick = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
+    const currentTime = event.target.getAttribute('value');
+    if (currentTime === '4hr') changeTime('4');
+    if (currentTime === '24hr') changeTime('24');
+    if (currentTime === '5day') changeTime('5');
     setOpen(false);
   };
 
+  //Toggles the dropdown open / closed
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -62,11 +70,17 @@ const TimeFrameDropdown = () => {
             }}
           >
             <Paper background={theme.palette.action.active}>
-              <ClickAwayListener onClickAway={menuClosed}>
+              <ClickAwayListener onClickAway={handleMenuClick}>
                 <MenuList autoFocusItem={open} id='menu-list-grow'>
-                  <MenuItem onClick={menuClosed}>4 Hours</MenuItem>
-                  <MenuItem onClick={menuClosed}>24 Hours</MenuItem>
-                  <MenuItem onClick={menuClosed}>5 Days</MenuItem>
+                  <MenuItem onClick={handleMenuClick} value='4hr'>
+                    4 Hours
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClick} value='24hr'>
+                    24 Hours
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClick} value='5day'>
+                    5 Days
+                  </MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
