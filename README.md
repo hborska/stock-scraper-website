@@ -1,7 +1,7 @@
 # Hot Stock Tracker (thetickerwatch.com)
 
-Website Link: 
-www.thetickerwatch.com
+## Website Link: 
+## www.thetickerwatch.com
 
 This is a website I created to track which stocks are being talked about the most on social media. So far, I have implemented Reddit and Twitter. I have plans to implement more websites and interactions with more APIs in the future, along with many other new features.
 
