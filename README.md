@@ -1,4 +1,4 @@
-# Hot Stock Tracker (thetickerwatch.com)
+# Hot Stock Tracker
 
 ## Website Link: www.thetickerwatch.com
 
