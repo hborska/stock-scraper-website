@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-const RedditTimeFrame = ({ changeTime }) => {
+const TwitterTimeFrame = ({ changeTime }) => {
   //Styling
   const classes = useStyles();
   const theme = useTheme();
@@ -91,4 +91,4 @@ const RedditTimeFrame = ({ changeTime }) => {
   );
 };
 
-export default RedditTimeFrame;
+export default TwitterTimeFrame;

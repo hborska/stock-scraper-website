@@ -58,18 +58,29 @@ const Reddit = () => {
   const [sort, setSort] = useState('upvotes');
   const [timeFrame, setTimeFrame] = useState('5');
 
-  //Fetching the stock data from our API upon component mounting or the stocks list changing
+  //Fetching the stock data from our API
+  async function fetchData() {
+    const req = await axios.get('/api/reddit', {
+      params: { sortMethod: sort, timeFrame: timeFrame },
+    });
+    // console.log(req.data);
+    setStocks(req.data);
+    return req.data;
+  }
+
+  //Re render list when sort or time frame is changed -- no need to refresh page, state stays intact
   useEffect(() => {
-    async function fetchData() {
-      const req = await axios.get('/api/reddit', {
-        params: { sortMethod: sort, timeFrame: timeFrame },
-      });
-      console.log(req.data);
-      setStocks(req.data);
-      return req.data;
-    }
     fetchData();
-  }, [sort, timeFrame]); //also add function for every 5 secs stocks changes
+  }, [sort, timeFrame]);
+
+  //Live updating the data every 5 seconds (constant live updates interrupts user experience)
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      fetchData();
+    }, 5000);
+    console.log('Refreshing Data...');
+    return () => clearTimeout(timer);
+  }, [stocks]);
 
   return (
     <div className='tablePg'>

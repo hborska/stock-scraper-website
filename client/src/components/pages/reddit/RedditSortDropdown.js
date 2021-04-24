@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-const SortByDropdown = ({ changeSort }) => {
+const RedditSortDropdown = ({ changeSort }) => {
   //Styling
   const classes = useStyles();
   const theme = useTheme();
@@ -92,4 +92,4 @@ const SortByDropdown = ({ changeSort }) => {
   );
 };
 
-export default SortByDropdown;
+export default RedditSortDropdown;
