@@ -27,15 +27,15 @@ const RedditStockSchema = mongoose.Schema(
   { collection: 'topstocks' }
 );
 
-//Modeling our schema
+//Modeling our schemas
 const RedditStock = mongoose.model('redditStock', RedditStockSchema);
 
-//Aggregating our schema based on time frame, grouping posts, and sorting
+//Aggregating our model based on time posted, grouping posts, and sorting
 //All aggregations below to be served to our reddit route then to the front end
 const sortByPosts4 = RedditStock.aggregate([
   {
     $match: {
-      time_posted: { $gt: new Date(Date.now() - 4 * 60 * 60 * 1000) },
+      time_posted: { $lte: new Date(Date.now() - 4 * 60 * 60 * 1000) },
     },
   },
   {
@@ -54,7 +54,7 @@ const sortByPosts4 = RedditStock.aggregate([
 const sortByPosts24 = RedditStock.aggregate([
   {
     $match: {
-      time_posted: { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+      time_posted: { $lte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
     },
   },
   {
@@ -73,7 +73,7 @@ const sortByPosts24 = RedditStock.aggregate([
 const sortByPosts5Day = RedditStock.aggregate([
   {
     $match: {
-      time_posted: { $gt: new Date(Date.now() - 24 * 5 * 60 * 60 * 1000) },
+      time_posted: { $lte: new Date(Date.now() - 24 * 5 * 60 * 60 * 1000) },
     },
   },
   {
@@ -92,7 +92,7 @@ const sortByPosts5Day = RedditStock.aggregate([
 const sortByUpvotes4 = RedditStock.aggregate([
   {
     $match: {
-      time_posted: { $gt: new Date(Date.now() - 4 * 60 * 60 * 1000) },
+      time_posted: { $lte: new Date(Date.now() - 4 * 60 * 60 * 1000) },
     },
   },
   {
@@ -111,7 +111,7 @@ const sortByUpvotes4 = RedditStock.aggregate([
 const sortByUpvotes24 = RedditStock.aggregate([
   {
     $match: {
-      time_posted: { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+      time_posted: { $lte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
     },
   },
   {
@@ -130,7 +130,7 @@ const sortByUpvotes24 = RedditStock.aggregate([
 const sortByUpvotes5Day = RedditStock.aggregate([
   {
     $match: {
-      time_posted: { $gt: new Date(Date.now() - 24 * 5 * 60 * 60 * 1000) },
+      time_posted: { $lte: new Date(Date.now() - 24 * 5 * 60 * 60 * 1000) },
     },
   },
   {
@@ -149,7 +149,7 @@ const sortByUpvotes5Day = RedditStock.aggregate([
 const sortByComments4 = RedditStock.aggregate([
   {
     $match: {
-      time_posted: { $gt: new Date(Date.now() - 4 * 60 * 60 * 1000) },
+      time_posted: { $lte: new Date(Date.now() - 4 * 60 * 60 * 1000) },
     },
   },
   {
@@ -168,7 +168,7 @@ const sortByComments4 = RedditStock.aggregate([
 const sortByComments24 = RedditStock.aggregate([
   {
     $match: {
-      time_posted: { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+      time_posted: { $lte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
     },
   },
   {
@@ -187,7 +187,7 @@ const sortByComments24 = RedditStock.aggregate([
 const sortByComments5Day = RedditStock.aggregate([
   {
     $match: {
-      time_posted: { $gt: new Date(Date.now() - 24 * 5 * 60 * 60 * 1000) },
+      time_posted: { $lte: new Date(Date.now() - 24 * 5 * 60 * 60 * 1000) },
     },
   },
   {

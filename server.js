@@ -16,7 +16,6 @@ dotenv.config({ path: '.env' });
 
 //Defining routes
 app.use('/api/reddit', require('./server/routes/reddit'));
-// app.use('/twitter', require('./server/routes/twitter'));
 
 const PORT = process.env.PORT || 5000;
 

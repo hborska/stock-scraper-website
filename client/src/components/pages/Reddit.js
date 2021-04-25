@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import RedditSortDropdown from './reddit/RedditSortDropdown';
 import RedditTimeFrame from './reddit/RedditTimeFrame';
+import SubredditDropdown from './reddit/SubredditDropdown';
 import axios from 'axios';
 import '../../App.css';
 
@@ -56,7 +57,8 @@ const Reddit = () => {
   const [stocks, setStocks] = useState([]); //list of stocks to render
   //set state for sorting and time frame allows us to dynamically change the state
   const [sort, setSort] = useState('upvotes');
-  const [timeFrame, setTimeFrame] = useState('5');
+  const [timeFrame, setTimeFrame] = useState('24');
+  const [subreddit, setSubreddit] = useState('all');
 
   //Fetching the stock data from our API
   async function fetchData() {
@@ -103,6 +105,11 @@ const Reddit = () => {
                 ? ` ${timeFrame} Hours`
                 : ` ${timeFrame} Days`}
             </strong>
+            <br />
+          </i>
+          from Subreddit{' '}
+          <i>
+            <strong>All</strong>
           </i>
         </h4>
         <Box
@@ -116,6 +123,7 @@ const Reddit = () => {
             changeTime={(timeFrame) => setTimeFrame(timeFrame)}
           />
           <RedditSortDropdown changeSort={(sort) => setSort(sort)} />
+          <SubredditDropdown />
         </Box>
       </Box>
 

@@ -92,9 +92,6 @@ const Navbar = () => {
                     <Link to='/reddit' class='dropdownItem'>
                       <MenuItem onClick={menuClosed}>Reddit Stocks</MenuItem>
                     </Link>
-                    <Link to='/twitter' class='dropdownItem'>
-                      <MenuItem onClick={menuClosed}>Twitter Stocks</MenuItem>
-                    </Link>
                     <Link to='/about' class='dropdownItem'>
                       <MenuItem onClick={menuClosed}>About</MenuItem>
                     </Link>

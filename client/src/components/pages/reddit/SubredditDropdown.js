@@ -9,7 +9,7 @@ import {
   ClickAwayListener,
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import WatchLaterIcon from '@material-ui/icons/WatchLater';
+import RedditIcon from '@material-ui/icons/Reddit';
 
 const useStyles = makeStyles({
   table: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TwitterTimeFrame = ({ changeTime }) => {
+const RedditSortDropdown = ({ changeSort }) => {
   //Styling
   const classes = useStyles();
   const theme = useTheme();
@@ -25,15 +25,16 @@ const TwitterTimeFrame = ({ changeTime }) => {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
-  //Called when a item in the dropdown menu is clicked
+  //Called when an item in the dropdown menu is clicked
   const handleMenuClick = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-    const currentTime = event.target.getAttribute('value');
-    if (currentTime === '4hr') changeTime('4');
-    if (currentTime === '24hr') changeTime('24');
-    if (currentTime === '5day') changeTime('5');
+    //Retrieves the value of the item selected in the dropdown
+    const currentSort = event.target.getAttribute('value');
+    if (currentSort === 'posts') changeSort('posts');
+    if (currentSort === 'upvotes') changeSort('upvotes');
+    if (currentSort === 'comments') changeSort('comments');
     setOpen(false);
   };
 
@@ -44,7 +45,7 @@ const TwitterTimeFrame = ({ changeTime }) => {
 
   return (
     <Fragment>
-      <p>Time Frame:</p>
+      <p>Subreddit:</p>
       <IconButton
         className={classes.menuOptions}
         ref={anchorRef}
@@ -52,7 +53,7 @@ const TwitterTimeFrame = ({ changeTime }) => {
         aria-haspopup='true'
         onClick={handleToggle}
       >
-        <WatchLaterIcon />
+        <RedditIcon />
       </IconButton>
       <Popper
         open={open}
@@ -72,14 +73,23 @@ const TwitterTimeFrame = ({ changeTime }) => {
             <Paper background={theme.palette.action.active}>
               <ClickAwayListener onClickAway={handleMenuClick}>
                 <MenuList autoFocusItem={open} id='menu-list-grow'>
-                  <MenuItem onClick={handleMenuClick} value='4hr'>
-                    4 Hours
+                  <MenuItem onClick={handleMenuClick} value='all'>
+                    All (Default)
                   </MenuItem>
-                  <MenuItem onClick={handleMenuClick} value='24hr'>
-                    24 Hours
+                  <MenuItem onClick={handleMenuClick} value='wallstreetbets'>
+                    R/wallstreetbets
                   </MenuItem>
-                  <MenuItem onClick={handleMenuClick} value='5day'>
-                    5 Days
+                  <MenuItem onClick={handleMenuClick} value='daytrading'>
+                    R/daytrading
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClick} value='stocks'>
+                    R/stocks
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClick} value='investing'>
+                    R/investing
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClick} value='pennystocks'>
+                    R/pennystocks
                   </MenuItem>
                 </MenuList>
               </ClickAwayListener>
@@ -91,4 +101,4 @@ const TwitterTimeFrame = ({ changeTime }) => {
   );
 };
 
-export default TwitterTimeFrame;
+export default RedditSortDropdown;

@@ -61,6 +61,7 @@ class Scraper:
 
         #Opening our CSV with all the stock tickers
         stockTickers = {}
+        #stockTickers = set()
         with open('scrapers/reddit/tickers.csv', mode='r') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
@@ -101,11 +102,14 @@ if __name__ == '__main__':
         try:
             #Run through the hot sections of the specified subreddit before pausing and checking again
             Scraper('wallstreetbets', lim=50, sort='hot').get_posts(topstocks)
+            Scraper('wallstreetbets', lim=50, sort='new').get_posts(topstocks)
             Scraper('stocks', lim=50, sort='hot').get_posts(topstocks)
+            Scraper('stocks', lim=50, sort='new').get_posts(topstocks)
             Scraper('daytrading', lim=50, sort='hot').get_posts(topstocks)
+            Scraper('daytrading', lim=50, sort='new').get_posts(topstocks)
             print("Going to sleep for a sec")
             time.sleep(1)
-            #mycol.delete_many({}) #only for testing DB
+            #topstocks.delete_many({}) #only for testing DB
 
         #Exception for when reddit servers go down (happens about once per day)
         except Exception:

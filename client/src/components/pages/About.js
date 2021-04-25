@@ -17,6 +17,10 @@ const About = () => {
           <GitHubIcon />
         </IconButton>
       </Typography>
+      <br />
+      <Typography variant='body'>
+        Data from more websites to come in the future!
+      </Typography>
     </div>
   );
 };
