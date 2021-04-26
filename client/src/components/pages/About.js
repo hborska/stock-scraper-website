@@ -19,7 +19,7 @@ const About = () => {
       </Typography>
       <br />
       <Typography variant='body'>
-        Data from more websites to come in the future!
+        Data from more websites and other improvements to come in the future!
       </Typography>
     </div>
   );

@@ -14,7 +14,6 @@ const IntroPage = () => {
   return (
     <Fragment>
       <StockSlider />
-
       <div className='introPage'>
         <Box
           borderRadius={16}

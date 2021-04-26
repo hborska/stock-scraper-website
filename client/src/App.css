@@ -7,6 +7,7 @@
 
 body {
   background-color: #303030; /*Set palette bg default globally to fix errors */
+  overflow-x: hidden;
 }
 
 .header,
@@ -36,7 +37,7 @@ body {
 
 .introPage {
   padding-bottom: 20%;
-  margin: 5% 15% 10% 15%;
+  margin: 10% 15% 10% 15%;
 }
 
 .icons {
@@ -44,10 +45,10 @@ body {
   width: 20vw;
   height: 20vh;
 }
-
+/* 
 .iconReddit {
   fill: #ff5700;
-}
+} */
 
 .tableOptionsButtons {
   color: #fff;
@@ -62,62 +63,46 @@ body {
   margin-bottom: 10%;
 }
 
-.slider-wrap {
+.slider-div {
   color: #fff;
   text-align: center;
+  left: 0%;
   width: 100%;
   height: 45px;
+  top: 70px;
   background: rgb(0, 0, 0);
-  border-radius: 5px;
-  border: 2px;
-  overflow: hidden;
-}
-
-.slider-wrap h2 {
-  margin: 0px;
-}
-
-.slider-move {
+  /* border-radius: 5px;
+  border: 2px; */
   display: flex;
-  position: relative;
-  top: 0;
-  right: 0;
+  position: absolute;
+  margin-top: 0.5%;
+  margin-bottom: 5%;
 }
 
-.slide {
-  box-sizing: border-box;
-  width: 100%;
-  flex-shrink: 0;
-  padding: 10px;
+/* Div for animation text */
+.sliding-text {
+  left: -20px;
+  top: -10px;
+  position: absolute;
+  overflow: hidden;
+  display: flex;
+  animation-name: ticker-slide;
+  animation-duration: 20s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
-@keyframes slideh {
-  0% {
-    left: 0;
-  }
-  20% {
-    left: 100%;
-  }
-  40% {
-    left: 200%;
-  }
-  60% {
-    left: 300%;
-  }
-  80% {
-    left: 400%;
-  }
-  100% {
-    left: 0;
-  }
+.sliding-text h2 {
+  /* word-spacing: 100px; */
+  top: 75px;
 }
 
-/* Move animation */
-.slider-move {
-  animation: slideh linear 10s infinite;
-}
-
-/* Pause slider on hover */
-.slider-move:hover {
-  animation-play-state: paused;
+/* Keyframes for animation */
+@keyframes ticker-slide {
+  from {
+    transform: translateX(-500px);
+  }
+  to {
+    transform: translateX(2000px);
+  }
 }

@@ -46,7 +46,7 @@ const Navbar = () => {
 
   return (
     <AppBar
-      position='static'
+      position='sticky'
       justify='space-between'
       color={theme.palette.primary.main}
     >
