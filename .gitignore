@@ -6,6 +6,6 @@ node_modules
 .env
 
 #production
-Procfile
-requirements.txt
-runtime.txt
+# Procfile
+# requirements.txt
+# runtime.txt
