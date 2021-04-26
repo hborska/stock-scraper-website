@@ -24,7 +24,7 @@ reddit = praw.Reddit(client_id=os.environ.get("client_id"), client_secret=os.env
 
 #Defining a class for a Reddit Post, so we can later insert into DB
 class Post(object):
-    def __init__(self, postID, postURL, ups, downs, numComments, stock, time_posted):
+    def __init__(self, postID, postURL, ups, downs, numComments, stock, time_posted, subreddit):
         self.postID = postID
         self.url = postURL
         self.stock = stock
@@ -32,6 +32,7 @@ class Post(object):
         self.downs = downs
         self.numComments = numComments
         self.time_posted = time_posted
+        self.subreddit = subreddit
 
 #Citation: found some of the scraper functionality on an article, cannot find it now (was for a website in C#, so a bit different)
 #Defining a class for the scraper that will go through posts in the subreddits
@@ -62,7 +63,7 @@ class Scraper:
         #Opening our CSV with all the stock tickers
         stockTickers = {}
         #stockTickers = set()
-        with open('scrapers/reddit/tickers.csv', mode='r') as csvfile:
+        with open('tickers.csv', mode='r') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 stockTickers[row[0].split(',')[0]] = {}
@@ -78,7 +79,7 @@ class Scraper:
             print(f'Checking post # {i}')
             for stock in stockTickers.keys():
                 if(re.search(r'\s+\$?' + stock + r'\$?\s+', post.selftext) or re.search(r'\s+\$?' + stock + r'\$?\s+',  post.title)):
-                    stockTickers[stock][post.id] = Post(post.id, post.permalink, post.ups, post.downs, post.num_comments, stock, str(datetime.now()))
+                    stockTickers[stock][post.id] = Post(post.id, post.permalink, post.ups, post.downs, post.num_comments, stock, str(datetime.now()), self.sub)
     #End citation
         
         for stock in stockTickers: #stockTickers is the WHOLE list (make more efficient in future)
@@ -100,16 +101,21 @@ class Scraper:
 if __name__ == '__main__':
     while True:
         try:
-            #Run through the hot sections of the specified subreddit before pausing and checking again
+            #Run through the hot and new sections of specified subreddits
             Scraper('wallstreetbets', lim=50, sort='hot').get_posts(topstocks)
             Scraper('wallstreetbets', lim=50, sort='new').get_posts(topstocks)
             Scraper('stocks', lim=50, sort='hot').get_posts(topstocks)
             Scraper('stocks', lim=50, sort='new').get_posts(topstocks)
             Scraper('daytrading', lim=50, sort='hot').get_posts(topstocks)
             Scraper('daytrading', lim=50, sort='new').get_posts(topstocks)
+            Scraper('investing', lim=50, sort='hot').get_posts(topstocks)
+            Scraper('investing', lim=50, sort='new').get_posts(topstocks)
+            Scraper('pennystocks', lim=50, sort='hot').get_posts(topstocks)
+            Scraper('pennystocks', lim=50, sort='new').get_posts(topstocks)
             print("Going to sleep for a sec")
             time.sleep(1)
-            #topstocks.delete_many({}) #only for testing DB
+            # topstocks.delete_many({}) #only for testing DB
+            # print('Cleared DB')
 
         #Exception for when reddit servers go down (happens about once per day)
         except Exception:

@@ -7,6 +7,10 @@ const RedditStockSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    url: {
+      type: String,
+      required: true,
+    },
     numPosts: {
       type: Number,
       required: true,
@@ -31,7 +35,7 @@ const RedditStockSchema = mongoose.Schema(
 const RedditStock = mongoose.model('redditStock', RedditStockSchema);
 
 //Aggregating our model based on time posted, grouping posts, and sorting
-//All aggregations below to be served to our reddit route then to the front end
+//Aggregations below to be served to our reddit route then to the front end
 const sortByPosts4 = RedditStock.aggregate([
   {
     $match: {

@@ -61,3 +61,63 @@ body {
 .stockTable {
   margin-bottom: 10%;
 }
+
+.slider-wrap {
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  height: 45px;
+  background: rgb(0, 0, 0);
+  border-radius: 5px;
+  border: 2px;
+  overflow: hidden;
+}
+
+.slider-wrap h2 {
+  margin: 0px;
+}
+
+.slider-move {
+  display: flex;
+  position: relative;
+  top: 0;
+  right: 0;
+}
+
+.slide {
+  box-sizing: border-box;
+  width: 100%;
+  flex-shrink: 0;
+  padding: 10px;
+}
+
+@keyframes slideh {
+  0% {
+    left: 0;
+  }
+  20% {
+    left: 100%;
+  }
+  40% {
+    left: 200%;
+  }
+  60% {
+    left: 300%;
+  }
+  80% {
+    left: 400%;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+/* Move animation */
+.slider-move {
+  animation: slideh linear 10s infinite;
+}
+
+/* Pause slider on hover */
+.slider-move:hover {
+  animation-play-state: paused;
+}

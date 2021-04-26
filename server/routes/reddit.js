@@ -3,6 +3,7 @@ const router = express.Router();
 
 //Requiring our aggregated models
 const RedditStock = require('../models/RedditStock');
+
 const sortByPosts4 = RedditStock.sortByPosts4;
 const sortByPosts24 = RedditStock.sortByPosts24;
 const sortByPosts5Day = RedditStock.sortByPosts5Day;
@@ -17,8 +18,9 @@ const sortByComments5Day = RedditStock.sortByComments5Day;
 
 //Route for /api/reddit on our API, exporting a model based on state in our React front end
 router.get('/', async (req, res) => {
-  let sortMethod = req.query.sortMethod;
-  let timeFrame = req.query.timeFrame;
+  const sortMethod = req.query.sortMethod;
+  const timeFrame = req.query.timeFrame;
+
   try {
     if (sortMethod === 'posts') {
       if (timeFrame === '4') stocks = await sortByPosts4;
@@ -35,6 +37,7 @@ router.get('/', async (req, res) => {
       if (timeFrame === '24') stocks = await sortByComments24;
       if (timeFrame === '5') stocks = await sortByComments5Day;
     }
+    // console.log('Rendering stocks list');
     res.json(stocks);
   } catch (err) {
     console.error(err.message);

@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-const RedditSortDropdown = ({ changeSort }) => {
+const RedditSortDropdown = ({ changeSubreddit }) => {
   //Styling
   const classes = useStyles();
   const theme = useTheme();
@@ -31,10 +31,12 @@ const RedditSortDropdown = ({ changeSort }) => {
       return;
     }
     //Retrieves the value of the item selected in the dropdown
-    const currentSort = event.target.getAttribute('value');
-    if (currentSort === 'posts') changeSort('posts');
-    if (currentSort === 'upvotes') changeSort('upvotes');
-    if (currentSort === 'comments') changeSort('comments');
+    const subreddit = event.target.getAttribute('value');
+    if (subreddit === 'wallstreetbets') changeSubreddit('wallstreetbets');
+    if (subreddit === 'daytrading') changeSubreddit('daytrading');
+    if (subreddit === 'stocks') changeSubreddit('stocks');
+    if (subreddit === 'investing') changeSubreddit('investing');
+    if (subreddit === 'pennystocks') changeSubreddit('pennystocks');
     setOpen(false);
   };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import RedditSortDropdown from './reddit/RedditSortDropdown';
 import RedditTimeFrame from './reddit/RedditTimeFrame';
-import SubredditDropdown from './reddit/SubredditDropdown';
+// import SubredditDropdown from './reddit/SubredditDropdown'; //for adding more features later
 import axios from 'axios';
 import '../../App.css';
 
@@ -58,7 +58,7 @@ const Reddit = () => {
   //set state for sorting and time frame allows us to dynamically change the state
   const [sort, setSort] = useState('upvotes');
   const [timeFrame, setTimeFrame] = useState('24');
-  const [subreddit, setSubreddit] = useState('all');
+  // const [subreddit, setSubreddit] = useState('all');
 
   //Fetching the stock data from our API
   async function fetchData() {
@@ -97,7 +97,7 @@ const Reddit = () => {
         <RedditIcon className='headerIcon' />
       </Box>
       <Box display='flex' className='headerBox'>
-        <h4 className='header'>
+        <h3 className='header'>
           Showing Top 20 Stocks from the Past:
           <i>
             <strong>
@@ -107,11 +107,14 @@ const Reddit = () => {
             </strong>
             <br />
           </i>
-          from Subreddit{' '}
-          <i>
-            <strong>All</strong>
-          </i>
-        </h4>
+          from
+          {/* <i>
+            <strong>
+              {' '}
+              {subreddit === 'all' ? 'All Subreddits' : `r/${subreddit}`}
+            </strong>
+          </i> */}
+        </h3>
         <Box
           display='flex'
           alignItems='center'
@@ -123,7 +126,9 @@ const Reddit = () => {
             changeTime={(timeFrame) => setTimeFrame(timeFrame)}
           />
           <RedditSortDropdown changeSort={(sort) => setSort(sort)} />
-          <SubredditDropdown />
+          {/* <SubredditDropdown
+            changeSubreddit={(subreddit) => setSubreddit(subreddit)}
+          /> */}
         </Box>
       </Box>
 
