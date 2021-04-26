@@ -87,7 +87,7 @@ body {
   overflow: hidden;
   display: flex;
   animation-name: ticker-slide;
-  animation-duration: 20s;
+  animation-duration: 18s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
@@ -103,6 +103,6 @@ body {
     transform: translateX(-500px);
   }
   to {
-    transform: translateX(2000px);
+    transform: translateX(1500px);
   }
 }

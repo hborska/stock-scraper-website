@@ -32,7 +32,7 @@ const StockSlider = () => {
         {stocks.slice(0, 10).map((stock) => (
           <h2 key={stock._id}>
             {stock._id}
-            &nbsp;&nbsp;
+            &nbsp;&nbsp; {/* nbsp to add spacing between stocks */}
           </h2>
         ))}
       </div>
