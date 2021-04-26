@@ -4,3 +4,8 @@ node_modules
 
 #environment variables
 .env
+
+#production
+Procfile
+requirements.txt
+runtime.txt
