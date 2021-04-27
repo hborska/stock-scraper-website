@@ -107,7 +107,7 @@ const Reddit = () => {
             </strong>
             <br />
           </i>
-          from
+          {/* from */}
           {/* <i>
             <strong>
               {' '}
