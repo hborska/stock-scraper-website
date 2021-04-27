@@ -1,1 +1,0 @@
-MONGO_URI="mongodb+srv://admin:fuckmelvin@cluster0.47l4b.mongodb.net/redditscraper?retryWrites=true&w=majority"
