@@ -63,7 +63,7 @@ class Scraper:
         #Opening our CSV with all the stock tickers
         stockTickers = {}
         #stockTickers = set()
-        with open('tickers.csv', mode='r') as csvfile:
+        with open('scrapers/reddit/tickers.csv', mode='r') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 stockTickers[row[0].split(',')[0]] = {}
