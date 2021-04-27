@@ -5,7 +5,7 @@ node_modules
 #environment variables
 .env
 
-#production
-# Procfile
-# requirements.txt
-# runtime.txt
+#files related to heroku deployment
+Procfile
+requirements.txt
+runtime.txt
