@@ -100,7 +100,7 @@ body {
 /* Keyframes for animation */
 @keyframes ticker-slide {
   from {
-    transform: translateX(-500px);
+    transform: translateX(-500px); /* Change to vw */
   }
   to {
     transform: translateX(1500px);

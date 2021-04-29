@@ -22,6 +22,7 @@ topstocks = db["topstocks"] #our DB collection
 #API credentials for heroku deployment, stored in heroku config:
 reddit = praw.Reddit(client_id=os.environ.get("client_id"), client_secret=os.environ.get("client_secret"), user_agent=os.environ.get("user_agent"))
 
+#CITATION: Original code for the scraper was found on YouTube (https://www.youtube.com/watch?v=wpCoHEieOxw&t=123s), which I modified to fit my website's needs
 #Defining a class for a Reddit Post, so we can later insert into DB
 class Post(object):
     def __init__(self, postID, postURL, ups, downs, numComments, stock, time_posted, subreddit):
