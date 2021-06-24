@@ -65,7 +65,8 @@ const Reddit = () => {
     const req = await axios.get('/api/reddit', {
       params: { sortMethod: sort, timeFrame: timeFrame },
     });
-    // console.log(req.data);
+    console.log(sort);
+    console.log(timeFrame);
     setStocks(req.data);
     return req.data;
   }
@@ -147,19 +148,23 @@ const Reddit = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {stocks.slice(0, 20).map((
-              //picking the top 20 stocks
-              row
-            ) => (
-              <StyledTableRow key={row._id}>
-                <StyledTableCell component='th' scope='row'>
-                  {row._id}
-                </StyledTableCell>
-                <StyledTableCell align='right'>{row.count}</StyledTableCell>
-                <StyledTableCell align='right'>{row.upvotes}</StyledTableCell>
-                <StyledTableCell align='right'>{row.comments}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {stocks.slice(0, 20).map(
+              (
+                //picking the top 20 stocks
+                row
+              ) => (
+                <StyledTableRow key={row._id}>
+                  <StyledTableCell component='th' scope='row'>
+                    {row._id}
+                  </StyledTableCell>
+                  <StyledTableCell align='right'>{row.count}</StyledTableCell>
+                  <StyledTableCell align='right'>{row.upvotes}</StyledTableCell>
+                  <StyledTableCell align='right'>
+                    {row.comments}
+                  </StyledTableCell>
+                </StyledTableRow>
+              )
+            )}
           </TableBody>
         </Table>
       </TableContainer>
