@@ -102,9 +102,10 @@ const Reddit = () => {
           Showing Top 20 Stocks from the Past:
           <i>
             <strong>
-              {timeFrame === '24' || timeFrame === '4'
-                ? ` ${timeFrame} Hours`
-                : ` ${timeFrame} Days`}
+              {(timeFrame === '24' || timeFrame === '4') &&
+                ` ${timeFrame} Hours`}
+              {timeFrame === '5' && ` ${timeFrame} Days`}
+              {timeFrame === 'month' && ' Month'}
             </strong>
             <br />
           </i>
