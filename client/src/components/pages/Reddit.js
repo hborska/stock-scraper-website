@@ -109,13 +109,14 @@ const Reddit = () => {
             </strong>
             <br />
           </i>
-          {/* from */}
-          {/* <i>
+          from {nbsp}
+          <i>
             <strong>
-              {' '}
-              {subreddit === 'all' ? 'All Subreddits' : `r/${subreddit}`}
+              {/* {' '}
+              {subreddit === 'all' ? 'All Subreddits' : `r/${subreddit}`} */}
+              All Subreddits
             </strong>
-          </i> */}
+          </i>
         </h3>
         <Box
           display='flex'
