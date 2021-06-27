@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   const sortMethod = req.query.sortMethod;
   const timeFrame = req.query.timeFrame;
 
-  //Making objects to link react names to actual names in mongoDB
+  //Linking React names to actual names in mongoDB
   const sortMethods = {
     upvotes: 'upvotes',
     comments: 'comments',
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
     const stocks = await RedditStock.aggregate([
       {
         $match: {
-          time_posted: { $lte: new Date(Date.now() - properTimeFrame) },
+          time_posted: { $gt: new Date(Date.now() - properTimeFrame) },
         },
       },
       {
