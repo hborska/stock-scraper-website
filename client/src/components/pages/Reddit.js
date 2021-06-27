@@ -65,8 +65,8 @@ const Reddit = () => {
     const req = await axios.get('/api/reddit', {
       params: { sortMethod: sort, timeFrame: timeFrame },
     });
-    console.log(sort);
-    console.log(timeFrame);
+    // console.log(sort);
+    // console.log(timeFrame);
     setStocks(req.data);
     return req.data;
   }
@@ -81,7 +81,7 @@ const Reddit = () => {
     let timer = setTimeout(() => {
       fetchData();
     }, 5000);
-    console.log('Refreshing Data...');
+    // console.log('Refreshing Data...');
     return () => clearTimeout(timer);
   }, [stocks]);
 

@@ -34,6 +34,7 @@ const RedditTimeFrame = ({ changeTime }) => {
     if (currentTime === '4hr') changeTime('4');
     if (currentTime === '24hr') changeTime('24');
     if (currentTime === '5day') changeTime('5');
+    if (currentTime === 'month') changeTime('month');
     setOpen(false);
   };
 
@@ -80,6 +81,9 @@ const RedditTimeFrame = ({ changeTime }) => {
                   </MenuItem>
                   <MenuItem onClick={handleMenuClick} value='5day'>
                     5 Days
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClick} value='month'>
+                    Month
                   </MenuItem>
                 </MenuList>
               </ClickAwayListener>

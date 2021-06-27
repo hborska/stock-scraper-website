@@ -15,7 +15,7 @@ const StockSlider = () => {
     const req = await axios.get('/api/reddit', {
       params: { sortMethod: sort, timeFrame: timeFrame },
     });
-    console.log(req.data);
+    // console.log(req.data);
     setStocks(req.data);
     return req.data;
   }

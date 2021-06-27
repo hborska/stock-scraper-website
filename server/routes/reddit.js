@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
     4: 4 * 60 * 60 * 1000,
     24: 24 * 60 * 60 * 1000,
     5: 24 * 5 * 60 * 60 * 1000,
+    Month: 24 * 30 * 60 * 60 * 1000,
   };
 
   let properSort = sortMethods[sortMethod];
