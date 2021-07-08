@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import RedditSortDropdown from './reddit/RedditSortDropdown';
 import RedditTimeFrame from './reddit/RedditTimeFrame';
-// import SubredditDropdown from './reddit/SubredditDropdown'; //for adding more features later
+import SubredditDropdown from './reddit/SubredditDropdown';
 import axios from 'axios';
 import '../../App.css';
 
@@ -53,33 +53,31 @@ const Reddit = () => {
   const classes = useStyles();
   const theme = useTheme();
 
-  //Setting default state for stocks
+  //Setting state for stocks, sort, time frame, and subreddit
   const [stocks, setStocks] = useState([]); //list of stocks to render
-  //set state for sorting and time frame allows us to dynamically change the state
   const [sort, setSort] = useState('upvotes');
   const [timeFrame, setTimeFrame] = useState('24');
-  // const [subreddit, setSubreddit] = useState('all');
+  const [subreddit, setSubreddit] = useState('all');
 
   //Fetching the stock data from our API
-  async function fetchData() {
+  async function getStocks() {
     const req = await axios.get('/api/reddit', {
-      params: { sortMethod: sort, timeFrame: timeFrame },
+      params: { sortMethod: sort, timeFrame, subreddit },
     });
-    // console.log(sort);
-    // console.log(timeFrame);
     setStocks(req.data);
     return req.data;
   }
+  console.log(stocks);
 
   //Re render list when sort or time frame is changed -- no need to refresh page, state stays intact
   useEffect(() => {
-    fetchData();
-  }, [sort, timeFrame]);
+    getStocks();
+  }, [sort, timeFrame, subreddit]);
 
   //Live updating the data every 5 seconds (constant live updates interrupts user experience)
   useEffect(() => {
     let timer = setTimeout(() => {
-      fetchData();
+      getStocks();
     }, 5000);
     // console.log('Refreshing Data...');
     return () => clearTimeout(timer);
@@ -109,12 +107,11 @@ const Reddit = () => {
             </strong>
             <br />
           </i>
-          from {nbsp}
+          from:
           <i>
             <strong>
-              {/* {' '}
-              {subreddit === 'all' ? 'All Subreddits' : `r/${subreddit}`} */}
-              All Subreddits
+              {' '}
+              {subreddit === 'all' ? 'All Subreddits' : `r/${subreddit}`}
             </strong>
           </i>
         </h3>
@@ -129,9 +126,9 @@ const Reddit = () => {
             changeTime={(timeFrame) => setTimeFrame(timeFrame)}
           />
           <RedditSortDropdown changeSort={(sort) => setSort(sort)} />
-          {/* <SubredditDropdown
+          <SubredditDropdown
             changeSubreddit={(subreddit) => setSubreddit(subreddit)}
-          /> */}
+          />
         </Box>
       </Box>
 
@@ -153,16 +150,18 @@ const Reddit = () => {
             {stocks.slice(0, 20).map(
               (
                 //picking the top 20 stocks
-                row
+                stock
               ) => (
-                <StyledTableRow key={row._id}>
+                <StyledTableRow key={stock._id}>
                   <StyledTableCell component='th' scope='row'>
-                    {row._id}
+                    {stock._id}
                   </StyledTableCell>
-                  <StyledTableCell align='right'>{row.count}</StyledTableCell>
-                  <StyledTableCell align='right'>{row.upvotes}</StyledTableCell>
+                  <StyledTableCell align='right'>{stock.count}</StyledTableCell>
                   <StyledTableCell align='right'>
-                    {row.comments}
+                    {stock.upvotes}
+                  </StyledTableCell>
+                  <StyledTableCell align='right'>
+                    {stock.comments}
                   </StyledTableCell>
                 </StyledTableRow>
               )

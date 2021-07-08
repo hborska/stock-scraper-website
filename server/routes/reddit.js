@@ -6,6 +6,7 @@ const RedditStock = require('../models/RedditStock');
 router.get('/', async (req, res) => {
   const sortMethod = req.query.sortMethod;
   const timeFrame = req.query.timeFrame;
+  const subreddit = req.query.subreddit;
 
   //Linking React names to actual names in mongoDB
   const sortMethods = {
@@ -23,25 +24,51 @@ router.get('/', async (req, res) => {
   let properSort = sortMethods[sortMethod];
   let properTimeFrame = timeFrames[timeFrame];
 
+  querySubreddit = [
+    {
+      $match: {
+        time_posted: { $gt: new Date(Date.now() - properTimeFrame) },
+        subreddit: subreddit,
+      },
+    },
+    {
+      $group: {
+        _id: '$stock',
+        count: { $sum: 1 },
+        upvotes: { $sum: '$ups' },
+        comments: { $sum: '$numComments' },
+      },
+    },
+    {
+      $sort: { [properSort]: -1 },
+    },
+  ];
+
+  queryAll = [
+    {
+      $match: {
+        time_posted: { $gt: new Date(Date.now() - properTimeFrame) },
+      },
+    },
+    {
+      $group: {
+        _id: '$stock',
+        count: { $sum: 1 },
+        upvotes: { $sum: '$ups' },
+        comments: { $sum: '$numComments' },
+      },
+    },
+    {
+      $sort: { [properSort]: -1 },
+    },
+  ];
+
   try {
-    const stocks = await RedditStock.aggregate([
-      {
-        $match: {
-          time_posted: { $gt: new Date(Date.now() - properTimeFrame) },
-        },
-      },
-      {
-        $group: {
-          _id: '$stock',
-          count: { $sum: 1 },
-          upvotes: { $sum: '$ups' },
-          comments: { $sum: '$numComments' },
-        },
-      },
-      {
-        $sort: { [properSort]: -1 },
-      },
-    ]).exec();
+    if (subreddit === 'all') {
+      stocks = await RedditStock.aggregate(queryAll).exec();
+    } else {
+      stocks = await RedditStock.aggregate(querySubreddit).exec();
+    }
     res.json(stocks);
   } catch (error) {
     res.json({ message: error });

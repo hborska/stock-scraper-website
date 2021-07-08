@@ -32,11 +32,7 @@ const RedditSortDropdown = ({ changeSubreddit }) => {
     }
     //Retrieves the value of the item selected in the dropdown
     const subreddit = event.target.getAttribute('value');
-    if (subreddit === 'wallstreetbets') changeSubreddit('wallstreetbets');
-    if (subreddit === 'daytrading') changeSubreddit('daytrading');
-    if (subreddit === 'stocks') changeSubreddit('stocks');
-    if (subreddit === 'investing') changeSubreddit('investing');
-    if (subreddit === 'pennystocks') changeSubreddit('pennystocks');
+    changeSubreddit(subreddit);
     setOpen(false);
   };
 
@@ -92,6 +88,9 @@ const RedditSortDropdown = ({ changeSubreddit }) => {
                   </MenuItem>
                   <MenuItem onClick={handleMenuClick} value='pennystocks'>
                     R/pennystocks
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClick} value='robinhood'>
+                    R/robinhood
                   </MenuItem>
                 </MenuList>
               </ClickAwayListener>

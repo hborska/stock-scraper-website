@@ -31,10 +31,7 @@ const RedditTimeFrame = ({ changeTime }) => {
       return;
     }
     const currentTime = event.target.getAttribute('value');
-    if (currentTime === '4hr') changeTime('4');
-    if (currentTime === '24hr') changeTime('24');
-    if (currentTime === '5day') changeTime('5');
-    if (currentTime === 'month') changeTime('month');
+    changeTime(currentTime);
     setOpen(false);
   };
 
@@ -73,13 +70,13 @@ const RedditTimeFrame = ({ changeTime }) => {
             <Paper background={theme.palette.action.active}>
               <ClickAwayListener onClickAway={handleMenuClick}>
                 <MenuList autoFocusItem={open} id='menu-list-grow'>
-                  <MenuItem onClick={handleMenuClick} value='4hr'>
+                  <MenuItem onClick={handleMenuClick} value='4'>
                     4 Hours
                   </MenuItem>
-                  <MenuItem onClick={handleMenuClick} value='24hr'>
+                  <MenuItem onClick={handleMenuClick} value='24'>
                     24 Hours
                   </MenuItem>
-                  <MenuItem onClick={handleMenuClick} value='5day'>
+                  <MenuItem onClick={handleMenuClick} value='5'>
                     5 Days
                   </MenuItem>
                   <MenuItem onClick={handleMenuClick} value='month'>

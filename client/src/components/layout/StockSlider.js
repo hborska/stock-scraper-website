@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// const dummydata = ['GME', 'AAPL', 'TSLA', 'XXX', 'QYDN'];
-
 const StockSlider = () => {
   //List of stocks to render in animation
   const [stocks, setStocks] = useState([]);
@@ -10,19 +8,18 @@ const StockSlider = () => {
   const [sort, setSort] = useState('posts');
   const [timeFrame, setTimeFrame] = useState('4');
 
-  //Fetching the stock data from our API
-  async function fetchData() {
-    const req = await axios.get('/api/reddit', {
-      params: { sortMethod: sort, timeFrame: timeFrame },
-    });
-    // console.log(req.data);
-    setStocks(req.data);
-    return req.data;
-  }
-
   //Call once upon loading, don't really need to update for the animation
   useEffect(() => {
-    fetchData();
+    //Fetching the stock data from our API (just default settings for the stock bar)
+    async function getStocks() {
+      const req = await axios.get('/api/reddit', {
+        params: { sortMethod: sort, timeFrame: timeFrame },
+      });
+      // console.log(req.data);
+      setStocks(req.data);
+      return req.data;
+    }
+    getStocks();
   }, []);
 
   return (
