@@ -67,7 +67,7 @@ const Reddit = () => {
     setStocks(req.data);
     return req.data;
   }
-  console.log(stocks);
+  // console.log(stocks);
 
   //Re render list when sort or time frame is changed -- no need to refresh page, state stays intact
   useEffect(() => {
