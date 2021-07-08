@@ -5,15 +5,20 @@ const StockSlider = () => {
   //List of stocks to render in animation
   const [stocks, setStocks] = useState([]);
   //Which stocks we want to pull for the animation
-  const [sort, setSort] = useState('posts');
-  const [timeFrame, setTimeFrame] = useState('4');
+  const sort = 'posts';
+  const timeFrame = '4';
+  const subreddit = 'all';
 
   //Call once upon loading, don't really need to update for the animation
   useEffect(() => {
     //Fetching the stock data from our API (just default settings for the stock bar)
     async function getStocks() {
       const req = await axios.get('/api/reddit', {
-        params: { sortMethod: sort, timeFrame: timeFrame },
+        params: {
+          sortMethod: sort,
+          timeFrame: timeFrame,
+          subreddit: subreddit,
+        },
       });
       // console.log(req.data);
       setStocks(req.data);
