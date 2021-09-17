@@ -55,8 +55,8 @@ const Reddit = () => {
 
   //Setting state for stocks, sort, time frame, and subreddit
   const [stocks, setStocks] = useState([]); //list of stocks to render
-  const [sort, setSort] = useState('upvotes');
-  const [timeFrame, setTimeFrame] = useState('24');
+  const [sort, setSort] = useState('posts');
+  const [timeFrame, setTimeFrame] = useState('month');
   const [subreddit, setSubreddit] = useState('all');
 
   //Fetching the stock data from our API
@@ -99,21 +99,15 @@ const Reddit = () => {
         <h3 className='header'>
           Showing Top 20 Stocks from the Past:
           <i>
-            <strong>
-              {(timeFrame === '24' || timeFrame === '4') &&
-                ` ${timeFrame} Hours`}
-              {timeFrame === '5' && ` ${timeFrame} Days`}
-              {timeFrame === 'month' && ' Month'}
-            </strong>
+            {(timeFrame === '24' || timeFrame === '4') && ` ${timeFrame} Hours`}
+            {timeFrame === '5' && ` ${timeFrame} Days`}
+            {timeFrame === 'month' && ' Month'}
             <br />
           </i>
           from:
-          <i>
-            <strong>
-              {' '}
-              {subreddit === 'all' ? 'All Subreddits' : `r/${subreddit}`}
-            </strong>
-          </i>
+          <i> {subreddit === 'all' ? 'All Subreddits ' : `r/${subreddit} `}</i>
+          <br />
+          sorting by: <i>{sort === 'posts' ? 'number of posts' : sort}</i>
         </h3>
         <Box
           display='flex'

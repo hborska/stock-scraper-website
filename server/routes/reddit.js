@@ -69,9 +69,9 @@ router.get('/', async (req, res) => {
     } else {
       stocks = await RedditStock.aggregate(querySubreddit).exec();
     }
-    res.json(stocks);
+    res.status(200).json(stocks);
   } catch (error) {
-    res.json({ message: error });
+    res.json({ message: error.message });
   }
 });
 

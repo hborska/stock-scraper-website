@@ -32,7 +32,7 @@ const RedditSortDropdown = ({ changeSort }) => {
     }
     //Retrieves the value of the item selected in the dropdown
     const currentSort = event.target.getAttribute('value');
-    changeSort(currentSort);
+    if (currentSort) changeSort(currentSort);
     setOpen(false);
   };
 

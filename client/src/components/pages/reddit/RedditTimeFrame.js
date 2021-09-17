@@ -31,7 +31,7 @@ const RedditTimeFrame = ({ changeTime }) => {
       return;
     }
     const currentTime = event.target.getAttribute('value');
-    changeTime(currentTime);
+    if (currentTime) changeTime(currentTime);
     setOpen(false);
   };
 

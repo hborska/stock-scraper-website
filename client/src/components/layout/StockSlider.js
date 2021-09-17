@@ -5,8 +5,8 @@ const StockSlider = () => {
   //List of stocks to render in animation
   const [stocks, setStocks] = useState([]);
   //Which stocks we want to pull for the animation
-  const sort = 'posts';
-  const timeFrame = '4';
+  const sort = '24';
+  const timeFrame = 'month';
   const subreddit = 'all';
 
   //Call once upon loading, don't really need to update for the animation
@@ -30,7 +30,7 @@ const StockSlider = () => {
   return (
     <div className='slider-div'>
       <div className='sliding-text'>
-        <h2>{'Hot Stocks: '}&nbsp;</h2>
+        <h2>{'Hot Stocks - Past 24 hours: '}&nbsp;</h2>
         {stocks.slice(0, 10).map((stock) => (
           <h2 key={stock._id}>
             {stock._id}

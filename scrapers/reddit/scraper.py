@@ -37,7 +37,6 @@ class Post(object):
         self.time_posted = time_posted
         self.subreddit = subreddit
 
-#Citation: found some of the scraper functionality on an article, cannot find it now (was for a website built in C#, so pretty different code)
 #Defining a class for the scraper that will go through posts in the subreddits
 class Scraper:
     def __init__(self, sub, sort='new', lim=900):

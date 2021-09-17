@@ -32,7 +32,7 @@ const RedditSortDropdown = ({ changeSubreddit }) => {
     }
     //Retrieves the value of the item selected in the dropdown
     const subreddit = event.target.getAttribute('value');
-    changeSubreddit(subreddit);
+    if (subreddit) changeSubreddit(subreddit);
     setOpen(false);
   };
 
